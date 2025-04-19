@@ -8,6 +8,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Request } from 'express';
+import { QueryOrderDto } from './dto/query-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -90,13 +91,61 @@ export class OrderService {
   //   }
   // }
 
-  async findAll() {
-    try {
-      const data = await this.prisma.order.findMany();
+  async findAll(query: QueryOrderDto) {
+    const {
+      page = 1,
+      limit = 10,
+      orderBy = 'asc',
+      sortBy = 'dete',
+      with_delivery,
+      total_sum,
+      gteTotal_sum,
+      lteTotal_sum,
+      date,
+      gteDate,
+      lteDate,
+      paid,
+      payment_type,
+      status,
+    } = query;
 
-      if (!data.length) {
-        throw new NotFoundException('Orders not found');
-      }
+    const filter: any = {};
+
+    if (with_delivery == 'true') filter.with_delivery = true;
+    if (with_delivery == 'false') filter.with_delivery = false;
+
+    if (paid == 'true') filter.paid = true;
+    if (paid == 'false') filter.paid = false;
+
+    if (payment_type) filter.payment_type = payment_type;
+    if (status) filter.status = status;
+
+    if (total_sum || gteTotal_sum || lteTotal_sum) {
+      filter.total_sum = {
+        gte: gteTotal_sum,
+        lte: lteTotal_sum,
+        equals: total_sum,
+      };
+    }
+
+    if (date || gteDate || lteDate) {
+      filter.dete = {
+        gte: gteDate,
+        lte: lteDate,
+        equals: date,
+      };
+    }
+
+    try {
+      const data = await this.prisma.order.findMany({
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
+        },
+        include: { OrderItems: { include: { Level: true, Profession: true } } },
+      });
 
       return { data };
     } catch (error) {

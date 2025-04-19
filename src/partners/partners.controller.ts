@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { PartnersService } from './partners.service';
 import { CreatePartnerDto } from './dto/create-partner.dto';
@@ -14,6 +15,8 @@ import { UpdatePartnerDto } from './dto/update-partner.dto';
 import { Role, Roles } from 'src/guards/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { QueryBrandDto } from 'src/brand/dto/query-brand.dto';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('partners')
 export class PartnersController {
@@ -27,8 +30,19 @@ export class PartnersController {
   }
 
   @Get()
-  findAll() {
-    return this.partnersService.findAll();
+  @ApiQuery({ name: 'orderBy', required: false, enum: ['asc', 'desc'] })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    enum: ['name_uz', 'name_ru', 'name_en'],
+  })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'name_en', required: false, type: String })
+  @ApiQuery({ name: 'name_ru', required: false, type: String })
+  @ApiQuery({ name: 'name_uz', required: false, type: String })
+  findAll(@Query() query: QueryBrandDto) {
+    return this.partnersService.findAll(query);
   }
 
   @Get(':id')

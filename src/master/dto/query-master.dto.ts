@@ -1,26 +1,27 @@
+import { PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
-  IsBoolean,
   IsDate,
   IsEnum,
   IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsPositive,
   IsString,
-  IsUUID,
   Min,
 } from 'class-validator';
 
 export enum Sort {
   full_name = 'full_name',
-  experience = 'experience',
   isActive = 'isActive',
   year = 'year',
+}
+
+export enum SearchSort {
   min_work_hours = 'min_work_hours',
   price_hourly = 'price_hourly',
   price_daily = 'price_daily',
+  experience = 'experience',
 }
 
 export class QueryMasterDto {
@@ -35,19 +36,9 @@ export class QueryMasterDto {
   phone?: string;
 
   @IsOptional()
-  @IsUUID()
+  @IsEnum(['true', 'false'])
   @IsNotEmpty()
-  level_id?: string;
-
-  @IsOptional()
-  @IsUUID()
-  @IsNotEmpty()
-  profession_id?: string;
-
-  @IsOptional()
-  @IsBoolean()
-  @IsNotEmpty()
-  isActive?: boolean;
+  isActive?: string;
 
   @IsOptional()
   @IsDate()
@@ -56,26 +47,16 @@ export class QueryMasterDto {
   year?: Date;
 
   @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
-  min_work_hours?: number;
+  @IsDate()
+  @Type(() => Date)
+  @IsNotEmpty()
+  maxYear?: Date;
 
   @IsOptional()
-  @Type(() => Number)
-  @IsPositive()
-  price_hourly?: Number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsPositive()
-  price_daily?: Number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  @Min(0)
-  experience?: Number;
+  @IsDate()
+  @Type(() => Date)
+  @IsNotEmpty()
+  minYear?: Date;
 
   @IsOptional()
   @Type(() => Number)
@@ -96,4 +77,90 @@ export class QueryMasterDto {
   @IsOptional()
   @IsEnum(Sort)
   sortBy?: Sort;
+}
+
+export class SearchMasterDto extends PickType(QueryMasterDto, [
+  'page',
+  'limit',
+  'orderBy',
+]) {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  level_id?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  profession_id?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  min_work_hours?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  gteMin_work_hours?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  lteMin_work_hours?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  price_hourly?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  gtePrice_hourly?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  ltePrice_hourly?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  price_daily?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  gtePrice_daily?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  ltePrice_daily?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  experience?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  gteExperience?: Number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  lteExperience?: Number;
+
+  @IsOptional()
+  @IsEnum(SearchSort)
+  sortBy?: SearchSort;
 }

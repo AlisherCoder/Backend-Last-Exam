@@ -8,7 +8,7 @@ import { CreateMasterDto } from './dto/create-master.dto';
 import { UpdateMasterDto } from './dto/update-master.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UploadService } from 'src/upload/upload.service';
-import { QueryMasterDto } from './dto/query-master.dto';
+import { QueryMasterDto, SearchMasterDto } from './dto/query-master.dto';
 
 @Injectable()
 export class MasterService {
@@ -64,39 +64,41 @@ export class MasterService {
       sortBy = 'full_name',
       full_name,
       phone,
-      level_id,
-      profession_id,
       isActive,
       year,
-      min_work_hours,
-      price_daily,
-      price_hourly,
-      experience,
+      maxYear,
+      minYear,
     } = query;
 
     let filter: any = {};
-    let skillsfilter: any = {};
 
     if (full_name)
       filter.full_name = { mode: 'insensitive', contains: full_name };
     if (phone) filter.phone = { mode: 'insensitive', contains: phone };
-    if (isActive) filter.isActive = isActive;
-    if (year) filter.year = year;
 
-    if (level_id) skillsfilter.level_id = level_id;
-    if (profession_id) skillsfilter.profession_id = profession_id;
-    if (min_work_hours) skillsfilter.min_work_hours = min_work_hours;
-    if (price_daily) skillsfilter.price_daily = price_daily;
-    if (price_hourly) skillsfilter.price_hourly = price_hourly;
-    if (experience) skillsfilter.experience = experience;
+    if (isActive == 'false') {
+      filter.isActive = false;
+    }
+
+    if (isActive == 'true') {
+      filter.isActive = true;
+    }
+
+    if (year || maxYear || minYear) {
+      filter.year = {
+        gte: maxYear,
+        lte: minYear,
+        equals: year,
+      };
+    }
 
     try {
       const data = await this.prisma.master.findMany({
-        where: {
-          ...filter,
-          MasterSkills: {
-            some: skillsfilter,
-          },
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
         },
       });
 
@@ -130,6 +132,85 @@ export class MasterService {
       if (!data) {
         throw new NotFoundException('Not found master');
       }
+
+      return { data };
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async search(query: SearchMasterDto) {
+    const {
+      page = 1,
+      limit = 10,
+      orderBy = 'desc',
+      sortBy = 'experience',
+      min_work_hours,
+      gteMin_work_hours,
+      lteMin_work_hours,
+      price_daily,
+      gtePrice_daily,
+      ltePrice_daily,
+      price_hourly,
+      gtePrice_hourly,
+      ltePrice_hourly,
+      experience,
+      gteExperience,
+      lteExperience,
+      level_id,
+      profession_id,
+    } = query;
+
+    let filter: any = {};
+
+    if (level_id) filter.level_id = level_id;
+    if (profession_id) filter.profession_id = profession_id;
+
+    if (min_work_hours || gteMin_work_hours || lteMin_work_hours) {
+      filter.min_work_hours = {
+        gte: gteMin_work_hours,
+        lte: lteMin_work_hours,
+        equals: min_work_hours,
+      };
+    }
+
+    if (price_hourly || gtePrice_hourly || ltePrice_hourly) {
+      filter.price_hourly = {
+        gte: gtePrice_hourly,
+        lte: ltePrice_daily,
+        equals: price_hourly,
+      };
+    }
+
+    if (price_daily || gtePrice_daily || ltePrice_daily) {
+      filter.price_daily = {
+        gte: gtePrice_daily,
+        lte: ltePrice_daily,
+        equals: price_daily,
+      };
+    }
+
+    if (experience || gteExperience || lteExperience) {
+      filter.experience = {
+        gte: gteExperience,
+        lte: lteExperience,
+        equals: experience,
+      };
+    }
+
+    try {
+      const data = await this.prisma.masterSkills.findMany({
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
+        },
+        include: { Level: true, Profession: true, Master: true },
+      });
 
       return { data };
     } catch (error) {

@@ -16,7 +16,7 @@ import { Role, Roles } from 'src/guards/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { ApiQuery } from '@nestjs/swagger';
-import { QueryMasterDto, Sort } from './dto/query-master.dto';
+import { QueryMasterDto, SearchMasterDto, SearchSort, Sort } from './dto/query-master.dto';
 
 @Controller('master')
 export class MasterController {
@@ -36,18 +36,37 @@ export class MasterController {
   @ApiQuery({ name: 'sortBy', required: false, enum: Sort })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiQuery({ name: 'page', required: false, type: Number })
-  @ApiQuery({ name: 'experience', required: false, type: Number })
-  @ApiQuery({ name: 'price_daily', required: false, type: Number })
-  @ApiQuery({ name: 'price_hourly', required: false, type: Number })
-  @ApiQuery({ name: 'min_work_hours', required: false, type: Number })
+  @ApiQuery({ name: 'isActive', required: false, enum: ['true', 'false'] })
+  @ApiQuery({ name: 'minYear', required: false, type: String })
+  @ApiQuery({ name: 'maxYear', required: false, type: String })
   @ApiQuery({ name: 'year', required: false, type: String })
-  @ApiQuery({ name: 'isActive', required: false, type: Boolean })
-  @ApiQuery({ name: 'profession_id', required: false, type: String })
-  @ApiQuery({ name: 'level_id', required: false, type: String })
   @ApiQuery({ name: 'phone', required: false, type: String })
   @ApiQuery({ name: 'full_name', required: false, type: String })
   findAll(@Query() query: QueryMasterDto) {
     return this.masterService.findAll(query);
+  }
+
+  @Get('search')
+  @ApiQuery({ name: 'orderBy', required: false, enum: ['asc', 'desc'] })
+  @ApiQuery({ name: 'sortBy', required: false, enum: SearchSort })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'lteExperience', required: false, type: Number })
+  @ApiQuery({ name: 'gteExperience', required: false, type: Number })
+  @ApiQuery({ name: 'experience', required: false, type: Number })
+  @ApiQuery({ name: 'ltePrice_daily', required: false, type: Number })
+  @ApiQuery({ name: 'gtePrice_daily', required: false, type: Number })
+  @ApiQuery({ name: 'price_daily', required: false, type: Number })
+  @ApiQuery({ name: 'ltePrice_hourly', required: false, type: Number })
+  @ApiQuery({ name: 'gtePrice_hourly', required: false, type: Number })
+  @ApiQuery({ name: 'price_hourly', required: false, type: Number })
+  @ApiQuery({ name: 'lteMin_work_hours', required: false, type: Number })
+  @ApiQuery({ name: 'gteMin_work_hours', required: false, type: Number })
+  @ApiQuery({ name: 'min_work_hours', required: false, type: Number })
+  @ApiQuery({ name: 'profession_id', required: false, type: String })
+  @ApiQuery({ name: 'level_id', required: false, type: String })
+  search(@Query() query: SearchMasterDto) {
+    return this.masterService.search(query);
   }
 
   @Roles(Role.ADMIN, Role.SUPERADMIN, Role.VIEWER_ADMIN)
