@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 
 export enum SortOrder {
-  dete = 'dete',
+  dete = 'date',
   total_sum = 'total_sum',
   with_delivery = 'with_delivery',
 }
@@ -26,7 +26,7 @@ export enum StatusOrder {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   PENDING = 'PENDING',
-  FINISHED = 'FINISHID',
+  FINISHED = 'FINISHED',
 }
 
 export class QueryOrderDto {

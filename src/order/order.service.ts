@@ -30,8 +30,34 @@ export class OrderService {
             where: { id: item.tool_id },
           });
 
+          if (!tool) {
+            throw new NotFoundException('Not found tool with this tool id');
+          }
+
           if (tool.count < item.count)
             throw new BadRequestException('Tool quantity is not enough');
+        }
+
+        if (item.profession_id) {
+          const prof = await this.prisma.profession.findUnique({
+            where: { id: item.profession_id },
+          });
+
+          if (!prof) {
+            throw new NotFoundException(
+              'Not found profession with this profession id',
+            );
+          }
+        }
+
+        if (item.level_id) {
+          const prof = await this.prisma.level.findUnique({
+            where: { id: item.level_id },
+          });
+
+          if (!prof) {
+            throw new NotFoundException('Not found level with this level id');
+          }
         }
       }
 
@@ -83,7 +109,7 @@ export class OrderService {
       page = 1,
       limit = 10,
       orderBy = 'asc',
-      sortBy = 'dete',
+      sortBy = 'date',
       with_delivery,
       total_sum,
       gteTotal_sum,
@@ -204,7 +230,7 @@ export class OrderService {
           status,
           Masters: { connect: masters?.map((master) => ({ id: master })) },
         },
-        include: { OrderItems: true },
+        include: { OrderItems: true, Masters: true },
       });
 
       if (data.status == 'ACTIVE' && status == 'FINISHED') {

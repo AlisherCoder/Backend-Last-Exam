@@ -277,8 +277,13 @@ export class MasterService {
         });
       }
 
-      await this.uploadService.deleteFile(updated.image);
-      await this.uploadService.deleteFile(updated.passport_image);
+      if (body.image) {
+        await this.uploadService.deleteFile(updated.image);
+      }
+
+      if (body.passport_image) {
+        await this.uploadService.deleteFile(updated.passport_image);
+      }
 
       return { data: updated };
     } catch (error) {
