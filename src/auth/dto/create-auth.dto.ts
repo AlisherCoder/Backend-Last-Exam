@@ -81,7 +81,7 @@ export class CreateAuthDto {
   @IsNotEmpty()
   region_id?: string;
 
-  @ApiProperty({ example: 'USER_FIZ' })
+  @ApiProperty({ example: 'USER_YUR' })
   @IsEnum(['USER_FIZ', 'USER_YUR'])
   @IsString()
   @IsNotEmpty()

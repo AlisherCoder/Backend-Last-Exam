@@ -153,13 +153,13 @@ export class OrderService {
       const data = await this.prisma.order.findUnique({
         where: { id },
         include: {
-          User: true,
+          User: { omit: { password: true } },
           OrderItems: {
             include: { Profession: true, Level: true, Tool: true },
           },
           Comment: {
             include: {
-              user: true,
+              user: { omit: { password: true } },
               MasterRatings: { include: { Master: true } },
             },
           },

@@ -83,6 +83,7 @@ export class ToolsService {
       brand_id,
       size_id,
       capacity_id,
+      code,
     } = query;
 
     const filter: any = {};
@@ -91,6 +92,7 @@ export class ToolsService {
     if (name_ru) filter.name_ru = { mode: 'insensitive', contains: name_ru };
     if (name_en) filter.name_en = { mode: 'insensitive', contains: name_en };
 
+    if (code) filter.code = code;
     if (brand_id) filter.brand_id = brand_id;
     if (size_id) filter.size_id = size_id;
     if (capacity_id) filter.capacity_id = capacity_id;
@@ -160,11 +162,54 @@ export class ToolsService {
   }
 
   async update(id: string, updateToolDto: UpdateToolDto) {
+    const { code, brand_id, size_id, capacity_id } = updateToolDto;
     try {
       const data = await this.prisma.tool.findUnique({ where: { id } });
 
       if (!data) {
         throw new NotFoundException('Not found tool');
+      }
+
+      if (code) {
+        const tool = await this.prisma.tool.findUnique({
+          where: { code },
+        });
+
+        if (tool) {
+          throw new BadRequestException('Tool already exists with this code');
+        }
+      }
+
+      if (brand_id) {
+        const brand = await this.prisma.brand.findUnique({
+          where: { id: brand_id },
+        });
+
+        if (!brand) {
+          throw new NotFoundException('Not found brand with this brand id');
+        }
+      }
+
+      if (size_id) {
+        const size = await this.prisma.size.findUnique({
+          where: { id: size_id },
+        });
+
+        if (!size) {
+          throw new NotFoundException('Not found size with this size id');
+        }
+      }
+
+      if (capacity_id) {
+        const capacity = await this.prisma.capacity.findUnique({
+          where: { id: capacity_id },
+        });
+
+        if (!capacity) {
+          throw new NotFoundException(
+            'Not found capacity with this capacity id',
+          );
+        }
       }
 
       const updated = await this.prisma.tool.update({

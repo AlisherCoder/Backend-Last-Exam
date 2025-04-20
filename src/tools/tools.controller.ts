@@ -45,6 +45,7 @@ export class ToolsController {
   @ApiQuery({ name: 'capacity_id', required: false, type: String })
   @ApiQuery({ name: 'size_id', required: false, type: String })
   @ApiQuery({ name: 'brand_id', required: false, type: String })
+  @ApiQuery({ name: 'code', required: false, type: String })
   @ApiQuery({ name: 'name_en', required: false, type: String })
   @ApiQuery({ name: 'name_ru', required: false, type: String })
   @ApiQuery({ name: 'name_uz', required: false, type: String })

@@ -47,6 +47,7 @@ export class UsersService {
           [sortBy]: orderBy,
         },
         include: { _count: true, Region: true },
+        omit: { password: true },
       });
 
       return { data: users };
@@ -62,6 +63,7 @@ export class UsersService {
     try {
       const user = await this.prisma.user.findUnique({
         where: { id },
+        omit: { password: true },
         include: {
           Company: true,
           Order: true,
@@ -116,6 +118,7 @@ export class UsersService {
         where: { id },
         data: data,
         include: { Company: true },
+        omit: { password: true },
       });
 
       return { data: updatedUser };

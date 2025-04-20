@@ -102,18 +102,18 @@ export enum Measure {
 }
 
 class CreateOrderItemDto {
-  @IsUUID()
   @IsOptional()
+  @IsString()
   @IsNotEmpty()
   tool_id?: string;
 
-  @IsUUID()
   @IsOptional()
+  @IsString()
   @IsNotEmpty()
   profession_id?: string;
 
-  @IsUUID()
   @IsOptional()
+  @IsString()
   @IsNotEmpty()
   level_id?: string;
 
