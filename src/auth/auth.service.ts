@@ -47,11 +47,13 @@ export class AuthService {
         throw new ConflictException('User already exists');
       }
 
-      const region = await this.prisma.region.findUnique({
-        where: { id: data.region_id },
-      });
-      if (!region) {
-        throw new NotFoundException('Not found region');
+      if (data.region_id) {
+        const region = await this.prisma.region.findUnique({
+          where: { id: data.region_id },
+        });
+        if (!region) {
+          throw new NotFoundException('Not found region');
+        }
       }
 
       const hashedpassword = await bcrypt.hash(data.password, 10);
