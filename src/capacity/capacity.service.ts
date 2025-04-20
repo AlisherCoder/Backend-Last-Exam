@@ -62,6 +62,7 @@ export class CapacityService {
         orderBy: {
           [sortBy]: orderBy,
         },
+        include: { _count: true },
       });
 
       return { data };

@@ -100,6 +100,7 @@ export class MasterService {
         orderBy: {
           [sortBy]: orderBy,
         },
+        include: { _count: true },
       });
 
       return { data };
@@ -129,11 +130,16 @@ export class MasterService {
         },
       });
 
+      const avgStar = await this.prisma.masterRatings.aggregate({
+        where: { master_id: id },
+        _avg: { star: true },
+      });
+
       if (!data) {
         throw new NotFoundException('Not found master');
       }
 
-      return { data };
+      return { data: { ...data, avgStar: avgStar._avg.star } };
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;

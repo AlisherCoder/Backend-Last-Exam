@@ -60,7 +60,9 @@ export class BrandService {
         orderBy: {
           [sortBy]: orderBy,
         },
+        include: { _count: true },
       });
+
       return { data };
     } catch (error) {
       if (error instanceof HttpException) {

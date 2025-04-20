@@ -6,14 +6,48 @@ import {
 } from '@nestjs/common';
 import { UpdateAuthDto } from 'src/auth/dto/update-auth.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { QueryUserDto } from './dto/query-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll() {
+  async findAll(query: QueryUserDto) {
+    const {
+      page = 1,
+      limit = 10,
+      orderBy = 'asc',
+      sortBy = 'full_name',
+      full_name,
+      phone,
+      createdAt,
+      region_id,
+      role,
+      status,
+    } = query;
+
+    let filter: any = {};
+
+    if (full_name)
+      filter.full_name = { mode: 'insensitive', contains: full_name };
+    if (phone) filter.phone = { mode: 'insensitive', contains: phone };
+    if (createdAt) filter.createdAt = createdAt;
+    if (region_id) filter.region_id = region_id;
+    if (role) filter.role = role;
+
+    if (status == 'true') filter.status = true;
+    if (status == 'false') filter.status = false;
+
     try {
-      const users = await this.prisma.user.findMany();
+      const users = await this.prisma.user.findMany({
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
+        },
+        include: { _count: true, Region: true },
+      });
 
       return { data: users };
     } catch (error) {

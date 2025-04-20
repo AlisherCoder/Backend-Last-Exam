@@ -9,6 +9,7 @@ import { CreateToolDto } from './dto/create-tool.dto';
 import { UpdateToolDto } from './dto/update-tool.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UploadService } from 'src/upload/upload.service';
+import { QueryToolDto } from './dto/query-tool.dto';
 
 @Injectable()
 export class ToolsService {
@@ -63,9 +64,71 @@ export class ToolsService {
     }
   }
 
-  async findAll() {
+  async findAll(query: QueryToolDto) {
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = 'name_uz',
+      orderBy = 'asc',
+      name_en,
+      name_ru,
+      name_uz,
+      isActive,
+      price,
+      maxPrice,
+      minPrice,
+      count,
+      maxCount,
+      minCount,
+      brand_id,
+      size_id,
+      capacity_id,
+    } = query;
+
+    const filter: any = {};
+
+    if (name_uz) filter.name_uz = { mode: 'insensitive', contains: name_uz };
+    if (name_ru) filter.name_ru = { mode: 'insensitive', contains: name_ru };
+    if (name_en) filter.name_en = { mode: 'insensitive', contains: name_en };
+
+    if (brand_id) filter.brand_id = brand_id;
+    if (size_id) filter.size_id = size_id;
+    if (capacity_id) filter.capacity_id = capacity_id;
+
+    if (isActive == 'true') filter.isActive = true;
+    if (isActive == 'false') filter.isActive = false;
+
+    if (price || maxPrice || minPrice) {
+      filter.price = {
+        gte: minPrice,
+        lte: maxPrice,
+        equals: price,
+      };
+    }
+
+    if (count || maxCount || minCount) {
+      filter.count = {
+        gte: minCount,
+        lte: maxCount,
+        equals: count,
+      };
+    }
+
     try {
-      const data = await this.prisma.tool.findMany();
+      let data = await this.prisma.tool.findMany({
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
+        },
+        include: {
+          Brand: true,
+          Size: true,
+          Capacity: true,
+          _count: true,
+        },
+      });
 
       return { data };
     } catch (error) {
@@ -80,7 +143,7 @@ export class ToolsService {
     try {
       const data = await this.prisma.tool.findUnique({
         where: { id },
-        include: { Professions: true },
+        include: { Professions: true, Brand: true, Size: true, Capacity: true },
       });
 
       if (!data) {

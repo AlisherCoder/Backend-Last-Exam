@@ -181,7 +181,7 @@ model Order {
   total_sum        Float
   location         Json
   address          String
-  dete             DateTime
+  date             DateTime
   payment_type     PaymentType  @default(CASH)
   paid             Boolean      @default(false)
   status           StatusOrder  @default(PENDING)

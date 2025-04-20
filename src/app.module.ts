@@ -25,6 +25,8 @@ import { FaqModule } from './faq/faq.module';
 import { ShowcaseModule } from './showcase/showcase.module';
 import { PartnersModule } from './partners/partners.module';
 import { SessionModule } from './session/session.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TelegrambotModule } from './telegrambot/telegrambot.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -35,6 +37,7 @@ import { SessionModule } from './session/session.module';
         api_secret: process.env.API_SECRET,
       }),
     }),
+    ScheduleModule.forRoot(),
     AuthModule,
     PrismaModule,
     RegionModule,
@@ -55,7 +58,8 @@ import { SessionModule } from './session/session.module';
     FaqModule,
     ShowcaseModule,
     PartnersModule,
-    SessionModule
+    SessionModule,
+    TelegrambotModule,
   ],
   controllers: [AppController],
   providers: [AppService, EskizService],

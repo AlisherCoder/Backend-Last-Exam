@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ToolsService } from './tools.service';
 import { CreateToolDto } from './dto/create-tool.dto';
@@ -14,6 +15,9 @@ import { UpdateToolDto } from './dto/update-tool.dto';
 import { Role, Roles } from 'src/guards/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { ApiQuery } from '@nestjs/swagger';
+import { QueryProfessionDto } from 'src/professions/dto/query-profession.dto';
+import { QueryToolDto, SortTool } from './dto/query-tool.dto';
 
 @Controller('tools')
 export class ToolsController {
@@ -27,8 +31,25 @@ export class ToolsController {
   }
 
   @Get()
-  findAll() {
-    return this.toolsService.findAll();
+  @ApiQuery({ name: 'orderBy', required: false, enum: ['asc', 'desc'] })
+  @ApiQuery({ name: 'sortBy', required: false, enum: SortTool })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'minCount', required: false, type: Number })
+  @ApiQuery({ name: 'maxCount', required: false, type: Number })
+  @ApiQuery({ name: 'count', required: false, type: Number })
+  @ApiQuery({ name: 'minPrice', required: false, type: Number })
+  @ApiQuery({ name: 'maxPrice', required: false, type: Number })
+  @ApiQuery({ name: 'price', required: false, type: Number })
+  @ApiQuery({ name: 'isActive', required: false, enum: ['true', 'false'] })
+  @ApiQuery({ name: 'capacity_id', required: false, type: String })
+  @ApiQuery({ name: 'size_id', required: false, type: String })
+  @ApiQuery({ name: 'brand_id', required: false, type: String })
+  @ApiQuery({ name: 'name_en', required: false, type: String })
+  @ApiQuery({ name: 'name_ru', required: false, type: String })
+  @ApiQuery({ name: 'name_uz', required: false, type: String })
+  findAll(@Query() query: QueryToolDto) {
+    return this.toolsService.findAll(query);
   }
 
   @Get(':id')

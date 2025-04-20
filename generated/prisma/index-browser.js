@@ -254,7 +254,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   total_sum: 'total_sum',
   location: 'location',
   address: 'address',
-  dete: 'dete',
+  date: 'date',
   payment_type: 'payment_type',
   paid: 'paid',
   status: 'status',

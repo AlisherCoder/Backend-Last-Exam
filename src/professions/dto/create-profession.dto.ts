@@ -12,6 +12,7 @@ import {
   IsInt,
   IsPositive,
   ValidateNested,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateProfessionDto {
@@ -50,17 +51,19 @@ export class CreateProfessionDto {
       },
     ],
   })
+  @IsOptional()
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => LevelProfessionDto)
-  levels: LevelProfessionDto[];
+  levels?: LevelProfessionDto[];
 
   @ApiProperty({ example: ['tool_id', 'tool_id'] })
+  @IsOptional()
   @IsArray()
   @ArrayNotEmpty()
   @IsString({ each: true })
-  tools: string[];
+  tools?: string[];
 }
 
 export class LevelProfessionDto {

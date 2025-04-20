@@ -53,7 +53,7 @@ export class LevelsService {
     if (name_uz) filter.name_uz = { mode: 'insensitive', contains: name_uz };
     if (name_ru) filter.name_ru = { mode: 'insensitive', contains: name_ru };
     if (name_en) filter.name_en = { mode: 'insensitive', contains: name_en };
-    
+
     try {
       const data = await this.prisma.level.findMany({
         where: filter,
@@ -62,6 +62,7 @@ export class LevelsService {
         orderBy: {
           [sortBy]: orderBy,
         },
+        include: { _count: true },
       });
 
       return { data };

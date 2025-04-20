@@ -8,6 +8,7 @@ import {
 import { CreateSizeDto } from './dto/create-size.dto';
 import { UpdateSizeDto } from './dto/update-size.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { QueryBrandDto } from 'src/brand/dto/query-brand.dto';
 
 @Injectable()
 export class SizeService {
@@ -34,9 +35,33 @@ export class SizeService {
     }
   }
 
-  async findAll() {
+  async findAll(query: QueryBrandDto) {
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = 'name_uz',
+      orderBy = 'asc',
+      name_en,
+      name_ru,
+      name_uz,
+    } = query;
+
+    const filter: any = {};
+
+    if (name_uz) filter.name_uz = { mode: 'insensitive', contains: name_uz };
+    if (name_ru) filter.name_ru = { mode: 'insensitive', contains: name_ru };
+    if (name_en) filter.name_en = { mode: 'insensitive', contains: name_en };
+
     try {
-      const data = await this.prisma.size.findMany();
+      const data = await this.prisma.size.findMany({
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
+        },
+        include: { _count: true },
+      });
 
       return { data };
     } catch (error) {

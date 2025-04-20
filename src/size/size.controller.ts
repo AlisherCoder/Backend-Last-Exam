@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { SizeService } from './size.service';
 import { CreateSizeDto } from './dto/create-size.dto';
@@ -14,6 +15,8 @@ import { UpdateSizeDto } from './dto/update-size.dto';
 import { Role, Roles } from 'src/guards/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { ApiQuery } from '@nestjs/swagger';
+import { QueryBrandDto } from 'src/brand/dto/query-brand.dto';
 
 @Controller('size')
 export class SizeController {
@@ -27,8 +30,19 @@ export class SizeController {
   }
 
   @Get()
-  findAll() {
-    return this.sizeService.findAll();
+  @ApiQuery({ name: 'orderBy', required: false, enum: ['asc', 'desc'] })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    enum: ['name_uz', 'name_ru', 'name_en'],
+  })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'name_en', required: false, type: String })
+  @ApiQuery({ name: 'name_ru', required: false, type: String })
+  @ApiQuery({ name: 'name_uz', required: false, type: String })
+  findAll(@Query() query: QueryBrandDto) {
+    return this.sizeService.findAll(query);
   }
 
   @Get(':id')

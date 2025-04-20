@@ -18417,7 +18417,7 @@ export namespace Prisma {
     user_id: string | null
     total_sum: number | null
     address: string | null
-    dete: Date | null
+    date: Date | null
     payment_type: $Enums.PaymentType | null
     paid: boolean | null
     status: $Enums.StatusOrder | null
@@ -18432,7 +18432,7 @@ export namespace Prisma {
     user_id: string | null
     total_sum: number | null
     address: string | null
-    dete: Date | null
+    date: Date | null
     payment_type: $Enums.PaymentType | null
     paid: boolean | null
     status: $Enums.StatusOrder | null
@@ -18448,7 +18448,7 @@ export namespace Prisma {
     total_sum: number
     location: number
     address: number
-    dete: number
+    date: number
     payment_type: number
     paid: number
     status: number
@@ -18473,7 +18473,7 @@ export namespace Prisma {
     user_id?: true
     total_sum?: true
     address?: true
-    dete?: true
+    date?: true
     payment_type?: true
     paid?: true
     status?: true
@@ -18488,7 +18488,7 @@ export namespace Prisma {
     user_id?: true
     total_sum?: true
     address?: true
-    dete?: true
+    date?: true
     payment_type?: true
     paid?: true
     status?: true
@@ -18504,7 +18504,7 @@ export namespace Prisma {
     total_sum?: true
     location?: true
     address?: true
-    dete?: true
+    date?: true
     payment_type?: true
     paid?: true
     status?: true
@@ -18607,7 +18607,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonValue
     address: string
-    dete: Date
+    date: Date
     payment_type: $Enums.PaymentType
     paid: boolean
     status: $Enums.StatusOrder
@@ -18642,7 +18642,7 @@ export namespace Prisma {
     total_sum?: boolean
     location?: boolean
     address?: boolean
-    dete?: boolean
+    date?: boolean
     payment_type?: boolean
     paid?: boolean
     status?: boolean
@@ -18663,7 +18663,7 @@ export namespace Prisma {
     total_sum?: boolean
     location?: boolean
     address?: boolean
-    dete?: boolean
+    date?: boolean
     payment_type?: boolean
     paid?: boolean
     status?: boolean
@@ -18680,7 +18680,7 @@ export namespace Prisma {
     total_sum?: boolean
     location?: boolean
     address?: boolean
-    dete?: boolean
+    date?: boolean
     payment_type?: boolean
     paid?: boolean
     status?: boolean
@@ -18697,7 +18697,7 @@ export namespace Prisma {
     total_sum?: boolean
     location?: boolean
     address?: boolean
-    dete?: boolean
+    date?: boolean
     payment_type?: boolean
     paid?: boolean
     status?: boolean
@@ -18707,7 +18707,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "total_sum" | "location" | "address" | "dete" | "payment_type" | "paid" | "status" | "with_delivery" | "comment_delivery" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "total_sum" | "location" | "address" | "date" | "payment_type" | "paid" | "status" | "with_delivery" | "comment_delivery" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
     Masters?: boolean | Order$MastersArgs<ExtArgs>
@@ -18736,7 +18736,7 @@ export namespace Prisma {
       total_sum: number
       location: Prisma.JsonValue
       address: string
-      dete: Date
+      date: Date
       payment_type: $Enums.PaymentType
       paid: boolean
       status: $Enums.StatusOrder
@@ -19176,7 +19176,7 @@ export namespace Prisma {
     readonly total_sum: FieldRef<"Order", 'Float'>
     readonly location: FieldRef<"Order", 'Json'>
     readonly address: FieldRef<"Order", 'String'>
-    readonly dete: FieldRef<"Order", 'DateTime'>
+    readonly date: FieldRef<"Order", 'DateTime'>
     readonly payment_type: FieldRef<"Order", 'PaymentType'>
     readonly paid: FieldRef<"Order", 'Boolean'>
     readonly status: FieldRef<"Order", 'StatusOrder'>
@@ -29575,7 +29575,7 @@ export namespace Prisma {
     total_sum: 'total_sum',
     location: 'location',
     address: 'address',
-    dete: 'dete',
+    date: 'date',
     payment_type: 'payment_type',
     paid: 'paid',
     status: 'status',
@@ -30811,7 +30811,7 @@ export namespace Prisma {
     total_sum?: FloatFilter<"Order"> | number
     location?: JsonFilter<"Order">
     address?: StringFilter<"Order"> | string
-    dete?: DateTimeFilter<"Order"> | Date | string
+    date?: DateTimeFilter<"Order"> | Date | string
     payment_type?: EnumPaymentTypeFilter<"Order"> | $Enums.PaymentType
     paid?: BoolFilter<"Order"> | boolean
     status?: EnumStatusOrderFilter<"Order"> | $Enums.StatusOrder
@@ -30831,7 +30831,7 @@ export namespace Prisma {
     total_sum?: SortOrder
     location?: SortOrder
     address?: SortOrder
-    dete?: SortOrder
+    date?: SortOrder
     payment_type?: SortOrder
     paid?: SortOrder
     status?: SortOrder
@@ -30854,7 +30854,7 @@ export namespace Prisma {
     total_sum?: FloatFilter<"Order"> | number
     location?: JsonFilter<"Order">
     address?: StringFilter<"Order"> | string
-    dete?: DateTimeFilter<"Order"> | Date | string
+    date?: DateTimeFilter<"Order"> | Date | string
     payment_type?: EnumPaymentTypeFilter<"Order"> | $Enums.PaymentType
     paid?: BoolFilter<"Order"> | boolean
     status?: EnumStatusOrderFilter<"Order"> | $Enums.StatusOrder
@@ -30874,7 +30874,7 @@ export namespace Prisma {
     total_sum?: SortOrder
     location?: SortOrder
     address?: SortOrder
-    dete?: SortOrder
+    date?: SortOrder
     payment_type?: SortOrder
     paid?: SortOrder
     status?: SortOrder
@@ -30898,7 +30898,7 @@ export namespace Prisma {
     total_sum?: FloatWithAggregatesFilter<"Order"> | number
     location?: JsonWithAggregatesFilter<"Order">
     address?: StringWithAggregatesFilter<"Order"> | string
-    dete?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    date?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     payment_type?: EnumPaymentTypeWithAggregatesFilter<"Order"> | $Enums.PaymentType
     paid?: BoolWithAggregatesFilter<"Order"> | boolean
     status?: EnumStatusOrderWithAggregatesFilter<"Order"> | $Enums.StatusOrder
@@ -32488,7 +32488,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -32508,7 +32508,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -32526,7 +32526,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -32546,7 +32546,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -32565,7 +32565,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -32580,7 +32580,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -32596,7 +32596,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -34037,7 +34037,7 @@ export namespace Prisma {
     total_sum?: SortOrder
     location?: SortOrder
     address?: SortOrder
-    dete?: SortOrder
+    date?: SortOrder
     payment_type?: SortOrder
     paid?: SortOrder
     status?: SortOrder
@@ -34056,7 +34056,7 @@ export namespace Prisma {
     user_id?: SortOrder
     total_sum?: SortOrder
     address?: SortOrder
-    dete?: SortOrder
+    date?: SortOrder
     payment_type?: SortOrder
     paid?: SortOrder
     status?: SortOrder
@@ -34071,7 +34071,7 @@ export namespace Prisma {
     user_id?: SortOrder
     total_sum?: SortOrder
     address?: SortOrder
-    dete?: SortOrder
+    date?: SortOrder
     payment_type?: SortOrder
     paid?: SortOrder
     status?: SortOrder
@@ -36411,7 +36411,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -36429,7 +36429,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -36624,7 +36624,7 @@ export namespace Prisma {
     total_sum?: FloatFilter<"Order"> | number
     location?: JsonFilter<"Order">
     address?: StringFilter<"Order"> | string
-    dete?: DateTimeFilter<"Order"> | Date | string
+    date?: DateTimeFilter<"Order"> | Date | string
     payment_type?: EnumPaymentTypeFilter<"Order"> | $Enums.PaymentType
     paid?: BoolFilter<"Order"> | boolean
     status?: EnumStatusOrderFilter<"Order"> | $Enums.StatusOrder
@@ -37999,7 +37999,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -38018,7 +38018,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -38559,7 +38559,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -38578,7 +38578,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -38716,7 +38716,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -38735,7 +38735,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -39220,7 +39220,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -39239,7 +39239,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -39337,7 +39337,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -39356,7 +39356,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -39578,7 +39578,7 @@ export namespace Prisma {
     total_sum: number
     location: JsonNullValueInput | InputJsonValue
     address: string
-    dete: Date | string
+    date: Date | string
     payment_type?: $Enums.PaymentType
     paid?: boolean
     status?: $Enums.StatusOrder
@@ -39632,7 +39632,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -39650,7 +39650,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -39668,7 +39668,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -40526,7 +40526,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -40545,7 +40545,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
@@ -40563,7 +40563,7 @@ export namespace Prisma {
     total_sum?: FloatFieldUpdateOperationsInput | number
     location?: JsonNullValueInput | InputJsonValue
     address?: StringFieldUpdateOperationsInput | string
-    dete?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_type?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     paid?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder

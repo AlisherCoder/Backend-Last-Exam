@@ -9,6 +9,7 @@ import { CreateProfessionDto } from './dto/create-profession.dto';
 import { UpdateProfessionDto } from './dto/update-profession.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UploadService } from 'src/upload/upload.service';
+import { QueryProfessionDto } from './dto/query-profession.dto';
 
 @Injectable()
 export class ProfessionsService {
@@ -28,32 +29,36 @@ export class ProfessionsService {
         throw new ConflictException('Profession already exists with this name');
       }
 
-      const toolsCount = await this.prisma.tool.count({
-        where: {
-          id: {
-            in: tools,
+      if (levels?.length) {
+        const toolsCount = await this.prisma.tool.count({
+          where: {
+            id: {
+              in: tools,
+            },
           },
-        },
-      });
+        });
 
-      if (tools.length !== toolsCount) {
-        throw new BadRequestException('Some tool id does not exists.');
+        if (tools?.length !== toolsCount) {
+          throw new BadRequestException('Some tool id does not exists.');
+        }
       }
 
-      const lvls = levels.map((lvl) => lvl.level_id);
-      const lvlsCount = await this.prisma.level.count({
-        where: {
-          id: {
-            in: lvls,
+      if (tools?.length) {
+        const lvls = levels?.map((lvl) => lvl.level_id);
+        const lvlsCount = await this.prisma.level.count({
+          where: {
+            id: {
+              in: lvls,
+            },
           },
-        },
-      });
+        });
 
-      if (lvls.length !== lvlsCount) {
-        throw new BadRequestException('Some level id does not exists.');
+        if (lvls?.length !== lvlsCount) {
+          throw new BadRequestException('Some level id does not exists.');
+        }
       }
 
-      const toolsToConnect = tools.map((id) => ({ id }));
+      const toolsToConnect = tools?.map((id) => ({ id }));
       const data = await this.prisma.profession.create({
         data: {
           ...body,
@@ -63,12 +68,14 @@ export class ProfessionsService {
         },
       });
 
-      const level = levels.map((level) => ({
+      const level = levels?.map((level) => ({
         ...level,
         profession_id: data.id,
       }));
 
-      await this.prisma.levelsProfessions.createMany({ data: level });
+      if (level?.length) {
+        await this.prisma.levelsProfessions.createMany({ data: level });
+      }
 
       return { data };
     } catch (error) {
@@ -79,9 +86,39 @@ export class ProfessionsService {
     }
   }
 
-  async findAll() {
+  async findAll(query: QueryProfessionDto) {
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = 'name_uz',
+      orderBy = 'asc',
+      name_en,
+      name_ru,
+      name_uz,
+      isActive,
+    } = query;
+
+    const filter: any = {};
+
+    if (name_uz) filter.name_uz = { mode: 'insensitive', contains: name_uz };
+    if (name_ru) filter.name_ru = { mode: 'insensitive', contains: name_ru };
+    if (name_en) filter.name_en = { mode: 'insensitive', contains: name_en };
+
+    if (isActive == 'true') filter.isActive = true;
+    if (isActive == 'false') filter.isActive = false;
+
     try {
-      const data = await this.prisma.profession.findMany();
+      let data = await this.prisma.profession.findMany({
+        where: filter,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          [sortBy]: orderBy,
+        },
+        include: {
+          _count: true,
+        },
+      });
 
       return { data };
     } catch (error) {
