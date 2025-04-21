@@ -159,9 +159,7 @@ export class OrderService {
         },
         include: {
           _count: true,
-          OrderItems: {
-            include: { Level: true, Profession: true, Tool: true },
-          },
+          User: true,
         },
       });
 

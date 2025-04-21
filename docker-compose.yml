@@ -24,6 +24,9 @@ services:
       - postgres
     environment:
       DATABASE_URL: "postgres://postgres:12345@postgres:5432/mydata"
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
 volumes:
   postgres_data:
