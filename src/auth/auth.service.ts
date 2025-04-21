@@ -59,6 +59,7 @@ export class AuthService {
       const hashedpassword = await bcrypt.hash(data.password, 10);
       const newUser = await this.prisma.user.create({
         data: { ...data, password: hashedpassword },
+        omit: { password: true },
       });
 
       if (newUser.role == 'USER_YUR' && company) {
@@ -72,7 +73,7 @@ export class AuthService {
 
       return {
         otp,
-        data: 'Registration was successful. The code was sent to your phone number, please activate your account',
+        data: newUser,
       };
     } catch (error) {
       if (error instanceof HttpException) {

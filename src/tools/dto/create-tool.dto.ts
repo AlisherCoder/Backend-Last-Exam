@@ -4,6 +4,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   Min,
@@ -57,19 +58,22 @@ export class CreateToolDto {
   code: string;
 
   @ApiProperty({ example: 'brand_id' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  brand_id: string;
+  brand_id?: string;
 
   @ApiProperty({ example: 'size_id' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  size_id: string;
+  size_id?: string;
 
   @ApiProperty({ example: 'capacity_id' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  capacity_id: string;
+  capacity_id?: string;
 
   @ApiProperty({ example: true })
   @IsBoolean()
